@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#9f9f9f">
+    <item android:drawable="@drawable/bg_for_exit_bottomsheet">
+    </item>
+
+</ripple>

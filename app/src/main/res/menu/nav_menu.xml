@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/group_action"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/navhome"
+            android:enabled="true"
+            android:icon="@drawable/ic_home"
+            android:title="@string/nav_home"
+            app:showAsAction="ifRoom">
+
+        </item>
+
+        <item
+            android:id="@+id/navpractice"
+            android:enabled="true"
+            android:icon="@drawable/baseline_menu_book_24"
+            android:title="@string/nav_practice"
+            app:showAsAction="ifRoom">
+
+        </item>
+
+        <item
+            android:id="@+id/naventertainment"
+            android:enabled="true"
+            android:icon="@drawable/ic_game"
+            android:title="Entertainment"
+            app:showAsAction="ifRoom">
+
+        </item>
+
+        <item
+            android:id="@+id/navuser"
+            android:enabled="true"
+            android:icon="@drawable/ic_person"
+            android:title="@string/nav_infor"
+            app:showAsAction="ifRoom">
+
+        </item>
+
+
+    </group>
+
+    <item android:title="Account">
+        <menu>
+
+            <item
+                android:id="@+id/navSetTing"
+                android:enabled="true"
+                android:title="@string/nav_setting"
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/ic_setting">
+
+            </item>
+
+            <item
+                android:id="@+id/navLogOut"
+                android:enabled="true"
+                android:title="@string/nav_sigout"
+                app:showAsAction="ifRoom"
+                android:icon="@drawable/ic_exit">
+
+            </item>
+
+        </menu>
+    </item>
+
+
+</menu>

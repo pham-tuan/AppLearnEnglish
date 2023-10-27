@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="practiceviewModel"
+            type="com.tuan.englishforkid.presentation.practive.PracticeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".presentation.practive.PractiveFragment">
+
+        <TextView
+            android:id="@+id/tvExit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/ic_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/llnext"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvExit"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvimg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:background="@color/white"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp"
+                app:cardMaxElevation="12dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:id="@+id/imgItemPractive"
+                    android:layout_width="match_parent"
+                    android:layout_height="204dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/dog" />
+
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/imgsound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_volume"
+                android:layout_marginTop="-24dp"/>
+
+            <LinearLayout
+                android:id="@+id/llresult"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginVertical="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:id="@+id/llShowResult"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvnamepractice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="Bee"
+                            android:textStyle="bold|italic"
+                            android:textSize="24dp" />
+
+                        <TextView
+                            android:id="@+id/tvspellingpractice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="/biː/"
+                            android:textSize="24dp" />
+
+                        <TextView
+                            android:id="@+id/tvmeanspractice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="con ong (n)"
+                            android:textSize="24dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btna"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="36dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_itempractive"
+                    android:gravity="center"
+                    android:paddingVertical="8dp"
+                    android:text="Bee"
+                    android:textSize="32dp" />
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="36dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_itempractive"
+                    android:gravity="center"
+                    android:paddingVertical="8dp"
+                    android:text="Crow"
+                    android:textSize="32dp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="36dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_itempractive"
+                    android:gravity="center"
+                    android:paddingVertical="8dp"
+                    android:text="Cat"
+                    android:textSize="32dp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="36dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_itempractive"
+                    android:gravity="center"
+                    android:paddingVertical="8dp"
+                    android:text="Sheep"
+                    android:textSize="32dp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llnext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            android:background="@drawable/bg_llnext_detail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="32dp">
+
+            <TextView
+                android:id="@+id/btnNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_next_ripple"
+                android:paddingHorizontal="48dp"
+                android:text="tiếp tục"
+                android:textColor="@color/white"
+                android:textSize="38dp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

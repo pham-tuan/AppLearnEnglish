@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="bgnen">#f8dcd9</color>
+    <color name="itemcolor">#F89F96</color>
+    <color name="itemShimmer">#E7E7E7</color>
+    <color name="True">#5DEC63</color>
+    <color name="False">#F45359</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorAccent">#FF5252</color>
+    <color name="xam">#9f9f9f</color>
+    <color name="xamtrang">#e0e0e0</color>
+    <color name="btnNextIn">#8ad900</color>
+    <color name="btnNextOut">#74c200</color>
+    <color name="bg_toolbar">#9FE4ED</color>
+
+</resources>

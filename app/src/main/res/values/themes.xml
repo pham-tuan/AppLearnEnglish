@@ -1,0 +1,32 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.EnglishForKid" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.EnglishForKid" parent="Base.Theme.EnglishForKid" />
+
+    <style name="StyleTextInactiveBottomNaviGation" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="StyleTextActiveBottomNaviGation" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/itemcolor</item>
+    </style>
+
+    <style name="Theme.Drawer_ToolBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Drawer_ToolBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+<!--    splash  -->
+    <style name="ThemeSplash" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:windowBackground"> @drawable/bg_splash </item>
+    </style>
+
+    <style name="Themecustom" parent="Theme.AppCompat.Light.Dialog.Alert" >
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+</resources>

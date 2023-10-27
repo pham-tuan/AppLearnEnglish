@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "97002110909",
+    "project_id": "enghlishforkids-dfdf0",
+    "storage_bucket": "enghlishforkids-dfdf0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:97002110909:android:4a3e1677c5ac335619dcd4",
+        "android_client_info": {
+          "package_name": "com.tuan.englishforkid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "97002110909-10ff4osgpq03fndojd5cjvjarh6jf0pt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tuan.englishforkid",
+            "certificate_hash": "185962ab1bce0fb0976d3a45bd7c88834d3a67fb"
+          }
+        },
+        {
+          "client_id": "97002110909-7h84769dd8l49964r4uogjflihd211c1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiCMDBjmj42PsmDuyl3XFJ24VlctkPXOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "97002110909-7h84769dd8l49964r4uogjflihd211c1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

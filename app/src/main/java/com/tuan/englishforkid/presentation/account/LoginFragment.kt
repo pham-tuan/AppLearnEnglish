@@ -4,13 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,10 +24,8 @@ import com.google.firebase.ktx.Firebase
 import com.tuan.englishforkid.MainActivity
 import com.tuan.englishforkid.R
 import com.tuan.englishforkid.databinding.FragmentLoginBinding
-import com.tuan.englishforkid.model.TopicResponse
 import com.tuan.englishforkid.model.User
 import com.tuan.englishforkid.model.UserResponse
-import com.tuan.englishforkid.utils.Constant
 import com.tuan.englishforkid.utils.DataResult
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,19 +72,20 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
                 result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
 
-                if(task.isSuccessful){
-                    val account : GoogleSignInAccount? = task.result
-                    val credential = GoogleAuthProvider.getCredential(account?.idToken,null)
+                if (task.isSuccessful) {
+                    val account: GoogleSignInAccount? = task.result
+                    val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
                     auth.signInWithCredential(credential).addOnCompleteListener {
-                        if(it.isSuccessful){
-                           // Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show()
-                        }else{
+                        if (it.isSuccessful) {
+                            // Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show()
+                        } else {
                             Toast.makeText(context, "Failed_login", Toast.LENGTH_SHORT).show()
 
                         }
@@ -100,7 +97,9 @@ class LoginFragment : Fragment() {
         }
 
     private fun HandleSingIn() {
-        if ((binding.edtuser.text.toString().trim() == "")|| (binding.edtpass.text.toString().trim() == "")) {
+        if ((binding.edtuser.text.toString().trim() == "") || (binding.edtpass.text.toString()
+                .trim() == "")
+        ) {
 
             Toast.makeText(context, "Bạn đang bỏ trống thông tin ", Toast.LENGTH_SHORT).show()
         } else {
@@ -122,28 +121,42 @@ class LoginFragment : Fragment() {
 
                         if (listUser.isNotEmpty()) {
                             for (user in listUser) {
-                                if (user.nameuser == binding.edtuser.text.toString().trim() && user.pass == binding.edtpass.text.toString().trim()) {
+                                if (user.nameuser == binding.edtuser.text.toString().trim()
+                                    && user.pass == binding.edtpass.text.toString().trim()
+                                ) {
                                     if (IsCheck == false) {
                                         findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
                                     } else {
                                         saveData()
                                     }
-
+                                    saveProfile(user)
                                     return@observe // Đã tìm thấy người dùng khớp, không cần kiểm tra tiếp
 
                                 }
                             }
                             // Nếu tới đây, có nghĩa không có người dùng nào khớp
-                            Toast.makeText(requireContext(), "Bạn đã nhập sai tên hoặc mật khẩu", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Bạn đã nhập sai tên hoặc mật khẩu",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             binding.edtuser.text = null
                             binding.edtpass.text = null
                         } else {
                             // Danh sách người dùng trống
-                            Toast.makeText(requireContext(), "Danh sách người dùng trống", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Danh sách người dùng trống",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     } else {
                         // Dữ liệu từ server bị null
-                        Toast.makeText(requireContext(), "Dữ liệu từ server không hợp lệ", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Dữ liệu từ server không hợp lệ",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 
@@ -155,6 +168,20 @@ class LoginFragment : Fragment() {
                     Toast.makeText(requireContext(), "lỗi data", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun saveProfile(user: User) {
+        val namep = user.nameuser
+        val gmailp = user.gmail
+        val passp = user.pass
+
+        sharePreferences = activity?.getSharedPreferences("USER", Context.MODE_PRIVATE) //?: return
+        with(sharePreferences?.edit()) {
+            this?.putString("Namep", namep)
+            this?.putString("Gmailp", gmailp)
+            this?.putString("Passp", passp)
+            this?.apply()
         }
     }
 
@@ -171,7 +198,6 @@ class LoginFragment : Fragment() {
             this?.apply()
         }
         findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
-
     }
 
 

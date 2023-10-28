@@ -4,12 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.profile.ChangeProfileFragment"
+    tools:context=".presentation.profile.ShowProfileFragment"
     android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/ctlTop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="0dp"
@@ -24,8 +28,8 @@
             android:id="@+id/profileimage"
             android:layout_width="114dp"
             android:layout_height="114dp"
-            android:layout_marginTop="26dp"
-            android:src="@drawable/avata_profile"
+            android:layout_marginTop="42dp"
+            android:src="@drawable/avata"
             app:civ_border_color="#FFFFFF"
             app:civ_border_width="2dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,122 +48,88 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileimage" />
 
-        <LinearLayout
-            android:id="@+id/llpoint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="78dp"
-            android:background="@drawable/bg_number_point"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingVertical="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileimage">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:elevation="1dp"
-                android:text="Số Điểm: "
-                android:textColor="@color/white"
-                android:textSize="28dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/numberPoint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="18dp"
-                android:text="178"
-                android:textColor="@color/white"
-                android:textSize="32dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvEmail"
-            android:layout_width="0dp"
-            android:layout_height="54dp"
-            android:layout_marginHorizontal="54dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/bg_text_profile"
-            android:gravity="center_vertical"
-            android:paddingStart="46dp"
-            android:text="Email"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvName" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:src="@drawable/baseline_email_24"
-            app:layout_constraintBottom_toBottomOf="@id/tvEmail"
-            app:layout_constraintStart_toStartOf="@id/tvEmail"
-            app:layout_constraintTop_toTopOf="@id/tvEmail" />
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="0dp"
-            android:layout_height="54dp"
-            android:layout_marginHorizontal="54dp"
-            android:layout_marginTop="54dp"
-            android:background="@drawable/bg_text_profile"
-            android:gravity="center_vertical"
-            android:paddingStart="46dp"
-            android:text="Name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llpoint" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:src="@drawable/ic_person_profile"
-            app:layout_constraintBottom_toBottomOf="@id/tvName"
-            app:layout_constraintStart_toStartOf="@id/tvName"
-            app:layout_constraintTop_toTopOf="@id/tvName" />
-
-        <TextView
-            android:id="@+id/tvPass"
-            android:layout_width="0dp"
-            android:layout_height="54dp"
-            android:layout_marginHorizontal="54dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/bg_text_profile"
-            android:gravity="center_vertical"
-            android:paddingStart="46dp"
-            android:text="Pass"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:src="@drawable/ic_lock_profile"
-            app:layout_constraintBottom_toBottomOf="@id/tvPass"
-            app:layout_constraintStart_toStartOf="@id/tvPass"
-            app:layout_constraintTop_toTopOf="@id/tvPass" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnsave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="xác nhận"
-            app:layout_constraintTop_toBottomOf="@+id/tvPass"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="24dp"/>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginHorizontal="54dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_text_profile"
+        android:gravity="center_vertical"
+        android:paddingStart="46dp"
+        android:text="Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/baseline_email_24"
+        app:layout_constraintBottom_toBottomOf="@id/tvEmail"
+        app:layout_constraintStart_toStartOf="@id/tvEmail"
+        app:layout_constraintTop_toTopOf="@id/tvEmail" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginHorizontal="54dp"
+        android:layout_marginTop="54dp"
+        android:background="@drawable/bg_text_profile"
+        android:gravity="center_vertical"
+        android:paddingStart="46dp"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ctlTop" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/ic_person_profile"
+        app:layout_constraintBottom_toBottomOf="@id/tvName"
+        app:layout_constraintStart_toStartOf="@id/tvName"
+        app:layout_constraintTop_toTopOf="@id/tvName" />
+
+    <TextView
+        android:id="@+id/tvPass"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginHorizontal="54dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_text_profile"
+        android:gravity="center_vertical"
+        android:paddingStart="46dp"
+        android:text="Passprofile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/ic_lock_profile"
+        app:layout_constraintBottom_toBottomOf="@id/tvPass"
+        app:layout_constraintStart_toStartOf="@id/tvPass"
+        app:layout_constraintTop_toTopOf="@id/tvPass" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnsave"
+        android:text="Confirm"
+        android:textSize="24dp"
+        app:layout_constraintTop_toBottomOf="@id/tvPass"
+        android:layout_marginTop="38dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/itemcolor"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

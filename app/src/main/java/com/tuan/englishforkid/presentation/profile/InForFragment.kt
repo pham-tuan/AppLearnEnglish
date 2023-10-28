@@ -39,7 +39,6 @@ class InForFragment : Fragment() {
             override fun onConfigureTab(tab: TabLayout.Tab, position: Int) {
                 tab.text = listTitle.getOrNull(position)
             }
-
         }) .attach()
     }
 

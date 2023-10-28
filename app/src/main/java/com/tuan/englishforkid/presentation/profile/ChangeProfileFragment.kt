@@ -4,13 +4,16 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.tuan.englishforkid.R
 import com.tuan.englishforkid.databinding.FragmentChangeBinding
+import com.tuan.englishforkid.databinding.FragmentShowProfileBinding
 
 
 class ChangeProfileFragment : Fragment() {
@@ -29,7 +32,6 @@ class ChangeProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentChangeBinding.inflate(layoutInflater)
-
             showProfile()
             handleUpload()
 
@@ -57,36 +59,37 @@ class ChangeProfileFragment : Fragment() {
 
             //lưu img URI vao sharepreferences
             binding.btnsave.setOnClickListener {
-                sharePreferences2 =
-                    activity?.getSharedPreferences("SELECTIMAGE", Context.MODE_PRIVATE)  // ?: return
-                with(sharePreferences2?.edit()){
+                sharePreferences2 = activity?.getSharedPreferences("SELECTIMAGE", Context.MODE_PRIVATE)
+                with(sharePreferences2?.edit()) {
                     this?.putString("selected_image_uri", ImageUridata.toString())
                     this?.apply()
                 }
                 Toast.makeText(context, "đã lưu thay đổi", Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 
 
     private fun showProfile() {
-        sharePreferences =
-            activity?.getSharedPreferences("REGISTER", Context.MODE_PRIVATE)  // ?: return
-        val name = sharePreferences?.getString("Name", "")
-        val email = sharePreferences?.getString("Email", "")
-        val pass = sharePreferences?.getString("Pass", "")
+        sharePreferences = activity?.getSharedPreferences("USER", Context.MODE_PRIVATE) //?: return
+        val name = sharePreferences?.getString("Namep", "")
+        val email = sharePreferences?.getString("Gmailp", "")
+        val pass = sharePreferences?.getString("Passp", "")
         binding.tvName.setText(name)
         binding.tvEmail.setText(email)
         binding.tvPass.setText(pass)
         binding.tvNameUser.setText(name)
 
-//        sharePreferences2 =
-//            activity?.getSharedPreferences("SELECTIMAGE", Context.MODE_PRIVATE)
+//        sharePreferences2 = activity?.getSharedPreferences("SELECTIMAGE", Context.MODE_PRIVATE)
 //        val selectedImageUriString = sharePreferences2?.getString("selected_image_uri", "")
 //        val selectedImageUri = Uri.parse(selectedImageUriString)
-
-        // binding.profileimage.setImageURI(selectedImageUri)
+//
+//        if (selectedImageUriString.isNullOrEmpty()) {
+//            binding.profileimage.setImageResource(R.drawable.avata)
+//        } else {
+//            val selectedImageUri = Uri.parse(selectedImageUriString)
+//            binding.profileimage.setImageURI(selectedImageUri)
+//        }
 
     }
 }

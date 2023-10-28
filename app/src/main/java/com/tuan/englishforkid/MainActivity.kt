@@ -4,12 +4,10 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
-import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -18,6 +16,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -26,7 +25,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.navigation.NavigationView
 import com.tuan.englishforkid.databinding.ActivityMainBinding
-import com.tuan.englishforkid.utils.Constant
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Objects
 
@@ -35,7 +33,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var navController: NavController? = null
     private lateinit var binding: ActivityMainBinding
     private var dialog: AlertDialog? = null
-    private var sharePreferences : SharedPreferences? = null
+    private var sharePreferences: SharedPreferences? = null
+    var br = BroadcastCheckInternet()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +43,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        registerReceiver(br, filter)
 
         disableSwipeDrawerLayout()
         handleDrawer()
         isetUpNavigationFragment()
         initView()
         setHeaderDraer()
+        setContentView(binding.root)
     }
 
     private fun checkInternet() {
@@ -92,14 +94,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // val view = layoutInflater.inflate(R.layout.nav_header,null)
         val headerView: View = binding.naview.getHeaderView(0)
         var nameProfile = headerView.findViewById<TextView>(R.id.nameUser)
-            // hiển thị lên headrerDrawer
+        // hiển thị lên headrerDrawer
 
         sharePreferences =
             this.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)  // ?: return
         val data1 = sharePreferences?.getString("NameLogin", "") ?: "tuanĐZ"
         nameProfile.setText(data1)
     }
-
 
     private fun disableSwipeDrawerLayout() {
         binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
@@ -185,6 +186,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 findNavController(R.id.nav_host_fragment).navigate(R.id.InForFragment)
                 true
             }
+
             R.id.navpractice -> {
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
                 findNavController(R.id.nav_host_fragment).navigate(R.id.pactiveFragment)
@@ -195,13 +197,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 setHandelAlertDialog()
                 true
             }
+
             else -> false
         }
         return false
     }
 
-
 }
+
 fun Activity.hideKeyboard(view: View) {
     val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(view.windowToken, 0)

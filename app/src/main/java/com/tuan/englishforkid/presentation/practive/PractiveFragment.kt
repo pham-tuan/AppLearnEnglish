@@ -268,8 +268,6 @@ class PractiveFragment : Fragment() {
             this?.putString("tfalse", ttFlase)
             this?.apply()
         }
-        Toast.makeText(requireContext(), "true: ${ttTrue}", Toast.LENGTH_SHORT).show()
-        Toast.makeText(requireContext(), "flase: ${ttFlase}", Toast.LENGTH_SHORT).show()
 
     }
 

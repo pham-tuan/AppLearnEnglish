@@ -11,9 +11,9 @@ import android.widget.Toast
 class BroadcastCheckInternet : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (isNetworkConnected(context)) {
-            Toast.makeText(context, "Mạng không khả dụng", Toast.LENGTH_LONG).show()
+
         } else {
-            Toast.makeText(context, "Đã có mạng ", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Mạng không khả dụng", Toast.LENGTH_LONG).show()
         }
     }
 

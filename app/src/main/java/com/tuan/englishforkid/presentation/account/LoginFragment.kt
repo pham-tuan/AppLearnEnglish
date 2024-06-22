@@ -26,6 +26,7 @@ import com.tuan.englishforkid.R
 import com.tuan.englishforkid.databinding.FragmentLoginBinding
 import com.tuan.englishforkid.model.User
 import com.tuan.englishforkid.model.UserResponse
+import com.tuan.englishforkid.utils.Constant
 import com.tuan.englishforkid.utils.DataResult
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,7 +57,7 @@ class LoginFragment : Fragment() {
             .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
         auth = Firebase.auth
-
+        sharePreferences = activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
         showDataFromSharePrefer()
 
         binding.btnLogin.setOnClickListener {
@@ -125,6 +126,7 @@ class LoginFragment : Fragment() {
                                     && user.pass == binding.edtpass.text.toString().trim()
                                 ) {
                                     if (IsCheck == false) {
+                                        sharePreferences?.edit()?.putBoolean(Constant.CHECK_LOGIN, true)?.apply()
                                         findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
                                     } else {
                                         saveData()
@@ -186,11 +188,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun saveData() {
-
         val name = binding.edtuser.text.toString()
         val pass = binding.edtpass.text.toString()
         val saveuser = binding.chkRememberUser.isChecked
-        sharePreferences = activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE) //?: return
+        sharePreferences = activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+        sharePreferences?.edit()?.putBoolean(Constant.CHECK_LOGIN, true)?.apply()
         with(sharePreferences?.edit()) {
             this?.putString("NameLogin", name)
             this?.putString("PassWord", pass)

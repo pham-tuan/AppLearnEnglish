@@ -84,7 +84,15 @@
         android:id="@+id/EntertainmentFragment"
         android:name="com.tuan.englishforkid.presentation.entertainment.EntertainmentFragment"
         android:label="EntertainmentFragment"
-        tools:layout="@layout/fragment_entertainment" />
+        tools:layout="@layout/fragment_entertainment" >
+        <action
+            android:id="@+id/action_EntertainmentFragment_to_PractiveFragment"
+            app:destination="@+id/pactiveFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
 
     <fragment
         android:id="@+id/InForFragment"
@@ -144,6 +152,10 @@
         android:label="DetailFragment"
         tools:layout="@layout/fragment_detail" />
 
-
+    <fragment
+        android:id="@+id/favorFragment"
+        android:name="com.tuan.englishforkid.presentation.favorite.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorite" />
 
 </navigation>

@@ -24,6 +24,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.navigation.NavigationView
+import com.tuan.englishforkid.brocastreceivers.BroadcastCheckInternet
 import com.tuan.englishforkid.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Objects
@@ -178,6 +179,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.naventertainment -> {
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
                 findNavController(R.id.nav_host_fragment).navigate(R.id.EntertainmentFragment)
+                true
+            }
+            R.id.navfavorite -> {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+                findNavController(R.id.nav_host_fragment).navigate(R.id.favorFragment)
                 true
             }
 

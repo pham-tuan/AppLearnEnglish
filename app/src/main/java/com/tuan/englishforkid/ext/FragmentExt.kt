@@ -9,7 +9,6 @@ fun Fragment.showLoading() {
     }
 }
 
-
 fun Fragment.hideLoading() {
     (activity as MainActivity).apply {
         hideLoading()

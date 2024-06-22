@@ -1,6 +1,7 @@
 package com.tuan.englishforkid.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -28,7 +29,11 @@ class TopicAdapter : ListAdapter<Topic, TopicAdapter.TopicViewHolder>(DiffCallba
     }
 
     override fun onBindViewHolder(holder: TopicViewHolder, position: Int) {
-        holder.bind(getItem(position))
+     //   holder.bind(getItem(position))
+        if(holder is TopicViewHolder){
+            Log.d("aaa","bind($position)")
+            holder.bind(getItem(position))
+        }
     }
 }
 

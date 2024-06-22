@@ -30,11 +30,18 @@
             android:id="@+id/naventertainment"
             android:enabled="true"
             android:icon="@drawable/ic_game"
-            android:title="Entertainment"
+            android:title="@string/entertainment"
             app:showAsAction="ifRoom">
 
         </item>
+        <item
+            android:id="@+id/navfavorite"
+            android:enabled="true"
+            android:icon="@drawable/ic_unlike"
+            android:title="@string/favorite_nav_menu"
+            app:showAsAction="ifRoom">
 
+        </item>
         <item
             android:id="@+id/navuser"
             android:enabled="true"
@@ -47,7 +54,7 @@
 
     </group>
 
-    <item android:title="Account">
+    <item android:title="@string/account">
         <menu>
 
             <item

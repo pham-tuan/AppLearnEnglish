@@ -1,4 +1,4 @@
-package com.tuan.englishforkid
+package com.tuan.englishforkid.brocastreceivers
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -7,11 +7,9 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.widget.Toast
 
-
 class BroadcastCheckInternet : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (isNetworkConnected(context)) {
-
         } else {
             Toast.makeText(context, "Mạng không khả dụng", Toast.LENGTH_LONG).show()
         }

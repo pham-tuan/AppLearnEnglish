@@ -17,4 +17,17 @@
     <string name="check_your_internet">Please check your network connection!</string>
     <string name="check_internet">Internet Error</string>
     <string name="exit">Cancel</string>
+    <string name="con_ong">Con Ong</string>
+    <string name="bi">/biː/</string>
+    <string name="bee">bee</string>
+    <string name="ng_v_t">Động Vật</string>
+    <string name="favorite">Favorite</string>
+    <string name="ti_p_t_c">tiếp tục</string>
+    <string name="th_c_hi_n">Thực Hiện</string>
+    <string name="b_qua">Bỏ Qua</string>
+    <string name="b_n_h_y_ho_n_th_nh_t_nh_t_10_c_u_luy_n_t_p_ng_li_n_ti_p_c_th_ti_p_t_c">Bạn hãy hoàn thành ít nhất 10 câu luyện tập đúng liên tiếp để có thể tiếp tục.</string>
+    <string name="con_linh_v_t_c_a_app">con linh vật của app</string>
+    <string name="account">Account</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="favorite_nav_menu">Favorite</string>
 </resources>

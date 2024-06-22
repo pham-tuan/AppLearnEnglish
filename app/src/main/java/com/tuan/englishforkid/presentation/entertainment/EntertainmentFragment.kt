@@ -1,5 +1,6 @@
 package com.tuan.englishforkid.presentation.entertainment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -7,8 +8,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuan.englishforkid.MainActivity
@@ -19,17 +23,17 @@ import com.tuan.englishforkid.utils.Constant
 
 class EntertainmentFragment : Fragment() {
 
-    lateinit var binding: FragmentEntertainmentBinding
-    private var listFilm: List<Video>? = null
+    private lateinit var binding: FragmentEntertainmentBinding
+    private var listFilm: List<Video> = listOf()
     private var filmAdapter: VideoAdapter? = null
-    private var sharePreferences: SharedPreferences? = null
-    var allowClick = false
+    private var sharedPreferences: SharedPreferences? = null
+    private var dialog: AlertDialog? = null
+    private var allowClick = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         (activity as MainActivity).handleShowHeader(false)
         binding = FragmentEntertainmentBinding.inflate(layoutInflater)
         setDataFilm()
@@ -42,7 +46,6 @@ class EntertainmentFragment : Fragment() {
     }
 
     private fun setDataFilm() {
-
         listFilm = listOf(
             Video(R.drawable.baothuc, "Báo Thức Lo-Fi", R.raw.daydiongchauoi),
             Video(R.drawable.anhemga, "Phim Anh Em Nhà Gà", R.raw.anhem_nha_ga),
@@ -54,55 +57,54 @@ class EntertainmentFragment : Fragment() {
         )
 
         binding.rcFilm.apply {
-            val layoutParams = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            layoutManager = layoutParams
-            filmAdapter = VideoAdapter(listFilm ?: listOf())
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            filmAdapter = VideoAdapter(listFilm)
             adapter = filmAdapter
         }
     }
 
     private fun handle() {
-        sharePreferences =activity?.getSharedPreferences("POINT", Context.MODE_PRIVATE)  // ?: return
-        val value = sharePreferences?.getString("pointtrue", " " )
-        var point = value?.toInt()
-        if (point != null) {
-            if (point >= 3) {
-                allowClick = true
-                // gán lại giá trị về 0 , chỉ cho xem 1 video , muốn xem thêm thì học thêm
-                point = 0
-                val value = point.toString()
-                sharePreferences = activity?.getSharedPreferences("POINT", Context.MODE_PRIVATE) //?: return
-                with(sharePreferences?.edit()) {
-                    this?.putString("pointtrue", value)
-                    this?.apply()
-                }
+        sharedPreferences = activity?.getSharedPreferences("POINT", Context.MODE_PRIVATE)
+        val value = sharedPreferences?.getString("pointtrue", "0")
+        var point = value?.toIntOrNull() ?: 0
 
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Hãy hoàn thành 3 câu hỏi đúng ở phần luyện tập",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }else
-        {
-            Toast.makeText(requireContext(), "null", Toast.LENGTH_SHORT).show()
+        if (point >= 3) {
+            allowClick = true
+            point = 0
+            sharedPreferences?.edit()?.putString("pointtrue", point.toString())?.apply()
+        } else {
+            showdialog()
         }
 
-        //  `allowClick` là true thì cho click
         if (allowClick) {
             filmAdapter?.onClickItem = {
-                val intent = Intent(requireActivity(), PlayVideo::class.java)
-                intent.putExtra("key", it)
+                val intent = Intent(requireActivity(), PlayVideo::class.java).apply {
+                    putExtra("key", it)
+                }
                 startActivity(intent)
-
             }
         }
 
-    binding.tvExit.setOnClickListener {
-        findNavController().navigate(R.id.HomeFragment)
+        binding.tvExit.setOnClickListener {
+            findNavController().navigate(R.id.HomeFragment)
         }
     }
 
+    private fun showdialog() {
+        val alertDialogBuilder = AlertDialog.Builder(activity, R.style.Themecustom)
+        val view = layoutInflater.inflate(R.layout.customdialog, null)
+        alertDialogBuilder.setView(view).setCancelable(false)
 
+        view.findViewById<TextView>(R.id.go).setOnClickListener {
+            dialog?.dismiss()
+            findNavController().navigate(R.id.pactiveFragment)
+        }
+        view.findViewById<TextView>(R.id.skip).setOnClickListener {
+            dialog?.dismiss()
+            findNavController().navigate(R.id.HomeFragment)
+        }
+
+        dialog = alertDialogBuilder.create()
+        dialog?.show()
+    }
 }

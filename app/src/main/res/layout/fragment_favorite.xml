@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
-            name="detailviewModel"
-            type="com.tuan.englishforkid.presentation.detail1.DetailViewModel" />
+            name="favoriteviewModel"
+            type="com.tuan.englishforkid.presentation.favorite.FavoriteFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="@string/ng_v_t"
+            android:text="@string/favorite"
             android:textColor="#8ad900"
             android:textSize="36sp"
             android:textStyle="bold|italic"
@@ -102,5 +101,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

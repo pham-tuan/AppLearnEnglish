@@ -32,6 +32,4 @@ interface APIServices {
         @Field("pass") pass: String?
     ): Response<UserResponse>
 
-
-
 }   

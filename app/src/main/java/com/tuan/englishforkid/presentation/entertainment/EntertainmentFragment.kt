@@ -47,13 +47,15 @@ class EntertainmentFragment : Fragment() {
 
     private fun setDataFilm() {
         listFilm = listOf(
-            Video(R.drawable.baothuc, "Báo Thức Lo-Fi", R.raw.daydiongchauoi),
+
             Video(R.drawable.anhemga, "Phim Anh Em Nhà Gà", R.raw.anhem_nha_ga),
+            Video(R.drawable.piper, "Piper", R.raw.piper),
+            Video(R.drawable.burrow, "burrow", R.raw.burrow),
             Video(R.drawable.convit, "Một Con Vịt", R.raw.mot_con_vit),
             Video(R.drawable.joy_story, "Joy_Story", R.raw.joy_toys),
-            Video(R.drawable.anhemga, "Phim Anh Em Nhà Gà", R.raw.anhem_nha_ga),
-            Video(R.drawable.convit, "Một Con Vịt", R.raw.mot_con_vit),
-            Video(R.drawable.joy_story, "Joy_Story", R.raw.joy_toys)
+            Video(R.drawable.party, "Party-Cloudy", R.raw.partlycloudy),
+            Video(R.drawable.laluna, "La-Luna", R.raw.laluna),
+            Video(R.drawable.hope, "Hope", R.raw.hope)
         )
 
         binding.rcFilm.apply {

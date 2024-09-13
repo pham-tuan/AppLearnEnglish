@@ -29,6 +29,7 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharePreferences = activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+
         val isLoggedIn = sharePreferences?.getBoolean(Constant.CHECK_LOGIN, false)
         Log.d("hung", "onViewCreated: $isLoggedIn")
         callView(isLoggedIn)

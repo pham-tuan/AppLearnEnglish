@@ -1,59 +1,115 @@
 package com.tuan.englishforkid
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import com.tuan.englishforkid.databinding.FragmentSettingBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SettingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentSettingBinding
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+        binding = FragmentSettingBinding.inflate(inflater, container, false)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+        setupUI()
+        SetOnclick()
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SettingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private fun SetOnclick() {
+        sharedPreferences = activity?.getSharedPreferences("USER", Context.MODE_PRIVATE)!!
+        val email = sharedPreferences.getString("Gmailp", null)
+
+        binding.tvphoi.setOnClickListener {
+            if (email != null) {
+                sendmail()
             }
+        }
     }
+
+    private fun sendmail() {
+            val toEmail = "tuantuan200201@gmail.com"
+            val subject = "Góp Ý"
+            val message = " "
+            val mIntent = Intent(Intent.ACTION_SEND)
+
+            mIntent.data = Uri.parse("mailto:")
+            mIntent.type = "text/plain"
+            mIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(toEmail))
+            mIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
+            mIntent.putExtra(Intent.EXTRA_TEXT, message)
+
+            try {
+                startActivity(Intent.createChooser(mIntent, "Gửi Email"))
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Không thể gửi email: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    private fun setupUI() {
+        // Lấy chế độ hiện tại của hệ thống
+        val currentNightMode = AppCompatDelegate.getDefaultNightMode()
+
+        // Cập nhật trạng thái của Switch dựa trên chế độ hiện tại của hệ thống
+        when (currentNightMode) {
+            AppCompatDelegate.MODE_NIGHT_YES -> {
+                binding.switchDarkMode.isChecked = true
+            }
+            AppCompatDelegate.MODE_NIGHT_NO -> {
+                binding.switchDarkMode.isChecked = false
+            }
+            else -> {
+                // Xử lý các chế độ khác nếu cần (MODE_NIGHT_FOLLOW_SYSTEM, MODE_NIGHT_AUTO_BATTERY, ...)
+                binding.switchDarkMode.isChecked = sharedPreferences.getBoolean("dark_mode", false)
+            }
+        }
+
+        // Set listeners cho Switch
+        binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
+            val newMode = if (isChecked) {
+                AppCompatDelegate.MODE_NIGHT_YES
+            } else {
+                AppCompatDelegate.MODE_NIGHT_NO
+            }
+
+            if (newMode != currentNightMode) {
+                AppCompatDelegate.setDefaultNightMode(newMode)
+                sharedPreferences.edit().putBoolean("dark_mode", isChecked).apply()
+                requireActivity().recreate() // Tạo lại activity để áp dụng thay đổi
+            }
+        }
+    }
+
+
+//    private fun setupUI() {
+//        // Set initial states of switches
+//        binding.switchDarkMode.isChecked = sharedPreferences.getBoolean("dark_mode", false)
+//
+//        // Set listeners for switches
+//        binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
+//            if (isChecked) {
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//            } else {
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//            }
+//            sharedPreferences.edit().putBoolean("dark_mode", isChecked).apply()
+//        }
+//
+//    }
+
+
 }

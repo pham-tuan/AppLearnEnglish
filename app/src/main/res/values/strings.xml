@@ -30,4 +30,5 @@
     <string name="account">Account</string>
     <string name="entertainment">Entertainment</string>
     <string name="favorite_nav_menu">Favorite</string>
+    <string name="speech">speech</string>
 </resources>

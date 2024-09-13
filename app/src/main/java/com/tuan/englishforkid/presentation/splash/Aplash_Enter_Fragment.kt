@@ -1,4 +1,4 @@
-package com.tuan.englishforkid.presentation.entertainment
+package com.tuan.englishforkid.presentation.splash
 
 import android.os.Bundle
 import android.os.Handler

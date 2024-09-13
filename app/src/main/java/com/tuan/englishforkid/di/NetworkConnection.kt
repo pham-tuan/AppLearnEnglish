@@ -1,4 +1,4 @@
-package com.tuan.englishforkid
+package com.tuan.englishforkid.di
 
 import android.content.Context
 import android.net.ConnectivityManager

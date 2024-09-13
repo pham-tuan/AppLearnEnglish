@@ -41,7 +41,8 @@
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out" />
+            app:popExitAnim="@anim/fade_out"
+            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/action_LoginFragment_to_RegisterFragment"
@@ -51,8 +52,20 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
 
-    </fragment>
+        <action
+            android:id="@+id/action_LoginFragment_to_ForgetPassFragment"
+            app:destination="@id/forgetPassFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPassFragment"
+        android:name="com.tuan.englishforkid.presentation.account.ForgetPassFragment"
+        android:label="ForgetPassFragment"
+        tools:layout="@layout/fragment_forget_pass" />
 
     <fragment
         android:id="@+id/RegisterFragment"
@@ -61,15 +74,28 @@
         tools:layout="@layout/fragment_register">
 
         <action
-            android:id="@+id/action_RegistertoLoginFragment"
-            app:destination="@+id/LoginFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out" />
+            android:id="@+id/action_Register_to_Confirmcode"
+            app:destination="@+id/ConfirmcodeFragment">
+
+        </action>
 
     </fragment>
 
+    <fragment
+        android:id="@+id/ConfirmcodeFragment"
+        android:name="com.tuan.englishforkid.presentation.account.ConfirmcodeFragment"
+        android:label="ConfirmCodeFragment"
+        tools:layout="@layout/fragment_confirmcode">
+
+        <action
+            android:id="@+id/action_Confirm_code_fragment_to_register_fragment"
+            app:destination="@+id/RegisterFragment" />
+
+        <action
+            android:id="@+id/action_Confirm_code_fragment_to_login_fragment"
+            app:destination="@+id/LoginFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/HomeFragment"
@@ -86,12 +112,17 @@
             app:popExitAnim="@anim/fade_out" />
 
     </fragment>
+    <fragment
+        android:id="@+id/SplashEnterFragment"
+        android:name="com.tuan.englishforkid.presentation.splash.Aplash_Enter_Fragment"
+        android:label="SplashEntertainmentFragment"
+        tools:layout="@layout/fragment_aplash__enter_" />
 
     <fragment
         android:id="@+id/EntertainmentFragment"
         android:name="com.tuan.englishforkid.presentation.entertainment.EntertainmentFragment"
         android:label="EntertainmentFragment"
-        tools:layout="@layout/fragment_entertainment" >
+        tools:layout="@layout/fragment_entertainment">
         <action
             android:id="@+id/action_EntertainmentFragment_to_PractiveFragment"
             app:destination="@+id/pactiveFragment"
@@ -106,22 +137,13 @@
         android:name="com.tuan.englishforkid.presentation.profile.InForFragment"
         android:label="InForFragment"
         tools:layout="@layout/fragment_infor" />
-
     <fragment
-        android:id="@+id/pactiveFragment"
+        android:id="@+id/pactiveFragment2"
         android:name="com.tuan.englishforkid.presentation.practive.PractiveFragment"
         android:label="PractiveFragment"
-        tools:layout="@layout/fragment_practive" >
-
+        tools:layout="@layout/fragment_practive">
         <action
-            android:id="@+id/action_PractiveFragment_to_HomeFragment"
-            app:destination="@+id/HomeFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out" />
-        <action
-            android:id="@+id/action_PractiveFragment_to_ResultFragment"
+            android:id="@+id/action_PractiveFragment2_to_ResultFragment"
             app:destination="@+id/resultFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
@@ -130,22 +152,45 @@
     </fragment>
 
     <fragment
-        android:id="@+id/resultFragment"
-        android:name="com.tuan.englishforkid.presentation.result.ResultFragment"
-        android:label="ResultFragment"
-        tools:layout="@layout/fragment_result" >
+        android:id="@+id/pactiveFragment"
+        android:name="com.tuan.englishforkid.presentation.splash.SplashPracFragment"
+        android:label="SplashPractiveFragment"
+        tools:layout="@layout/fragment_splash_prac">
 
         <action
-            android:id="@+id/action_ResultFragment_to_PracticeFragment"
-            app:destination="@+id/pactiveFragment"
+            android:id="@+id/action_PractiveFragment_to_HomeFragment"
+            app:destination="@+id/HomeFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/listenFragment"
+        android:name="com.tuan.englishforkid.presentation.listen.ListenFragment"
+        android:label="ListenFragment"
+        tools:layout="@layout/fragment_listen">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.tuan.englishforkid.presentation.result.ResultFragment"
+        android:label="ResultFragment"
+        tools:layout="@layout/fragment_result">
+
         <action
             android:id="@+id/action_ResultFragment_to_HomeFragment"
             app:destination="@+id/HomeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_ResultFragment_to_PracticeFragment2"
+            app:destination="@+id/pactiveFragment2"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -164,5 +209,10 @@
         android:name="com.tuan.englishforkid.presentation.favorite.FavoriteFragment"
         android:label="FavoriteFragment"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/SetingFragment"
+        android:name="com.tuan.englishforkid.SettingFragment"
+        android:label="SettingFragment"
+        tools:layout="@layout/fragment_setting" />
 
 </navigation>

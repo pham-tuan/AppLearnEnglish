@@ -22,7 +22,29 @@
             android:layout_marginStart="8dp"
             android:background="@drawable/ic_close"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"/>
+
+        <TextView
+            android:id="@+id/tvhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text=" HỌC MÀ CHƠI , CHƠI MÀ HỌC NHÉ :Đ "
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:textSize="24dp"
+            android:textStyle="bold|italic"
+            android:textColor="@color/itemcolor"
+            app:layout_constraintStart_toEndOf="@id/tvExit"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            android:paddingStart="8dp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +64,8 @@
                 app:cardElevation="10dp"
                 app:cardMaxElevation="12dp"
                 app:cardPreventCornerOverlap="true"
-                app:cardUseCompatPadding="true">
+                app:cardUseCompatPadding="true"
+                android:layout_marginTop="8dp">
 
                 <ImageView
                     android:id="@+id/imgItemPractive"
@@ -52,14 +75,6 @@
                     android:src="@drawable/dog" />
 
             </androidx.cardview.widget.CardView>
-
-            <ImageView
-                android:id="@+id/imgsound"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_volume"
-                android:layout_marginTop="-24dp"/>
 
             <LinearLayout
                 android:id="@+id/llresult"
@@ -120,9 +135,8 @@
                     android:background="@drawable/bg_itempractive"
                     android:gravity="center"
                     android:paddingVertical="8dp"
-                    android:text="Bee"
+                    android:text="Từ đang trống"
                     android:textSize="32dp" />
-
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnb"
@@ -133,7 +147,7 @@
                     android:background="@drawable/bg_itempractive"
                     android:gravity="center"
                     android:paddingVertical="8dp"
-                    android:text="Crow"
+                    android:text="Từ đang trống"
                     android:textSize="32dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -145,7 +159,7 @@
                     android:background="@drawable/bg_itempractive"
                     android:gravity="center"
                     android:paddingVertical="8dp"
-                    android:text="Cat"
+                    android:text="Từ đang trống"
                     android:textSize="32dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -157,7 +171,7 @@
                     android:background="@drawable/bg_itempractive"
                     android:gravity="center"
                     android:paddingVertical="8dp"
-                    android:text="Sheep"
+                    android:text="Từ đang trống"
                     android:textSize="32dp" />
 
 

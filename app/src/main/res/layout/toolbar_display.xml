@@ -17,11 +17,16 @@
             android:layout_margin="6dp"/>
 
         <TextView
+            android:id="@+id/tvhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="20dp"
-            android:text="HỌC TIẾNG ANH CÙNG ..."
+            android:text="CÙNG HỌC TIẾNG ANH CÙNG CHÚNG MÌNH NHÉ"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:textSize="24dp"
             android:textStyle="bold|italic" />
 

@@ -1,31 +1,25 @@
 package com.tuan.englishforkid.presentation.account
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.tuan.englishforkid.MainActivity
 import com.tuan.englishforkid.R
 import com.tuan.englishforkid.databinding.FragmentLoginBinding
 import com.tuan.englishforkid.model.User
 import com.tuan.englishforkid.model.UserResponse
+import com.tuan.englishforkid.presentation.home.HomeFragment
 import com.tuan.englishforkid.utils.Constant
 import com.tuan.englishforkid.utils.DataResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,8 +29,6 @@ class LoginFragment : Fragment() {
 
     lateinit var binding: FragmentLoginBinding
     private var sharePreferences: SharedPreferences? = null
-    private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var auth: FirebaseAuth
     private val viewModelLogin: UserViewModel by viewModels()
 
     override fun onCreateView(
@@ -53,10 +45,6 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
-        googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        auth = Firebase.auth
         sharePreferences = activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
         showDataFromSharePrefer()
 
@@ -66,106 +54,85 @@ class LoginFragment : Fragment() {
         binding.tvdangky.setOnClickListener {
             findNavController().navigate(R.id.action_LoginFragment_to_RegisterFragment)
         }
-
-        binding.btnLoginGG.setOnClickListener {
-            val signinClient = googleSignInClient.signInIntent
-            launcher.launch(signinClient)
+        binding.forgetPass.setOnClickListener {
+            findNavController().navigate(R.id.action_LoginFragment_to_ForgetPassFragment)
         }
+
     }
 
-    private val launcher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-
-                result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-
-                if (task.isSuccessful) {
-                    val account: GoogleSignInAccount? = task.result
-                    val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
-                    auth.signInWithCredential(credential).addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            // Toast.makeText(context, "DONE", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(context, "Failed_login", Toast.LENGTH_SHORT).show()
-
-                        }
-                    }
-                }
-            } else {
-                Toast.makeText(context, "Failed ", Toast.LENGTH_SHORT).show()
-            }
-        }
 
     private fun HandleSingIn() {
-        if ((binding.edtuser.text.toString().trim() == "") || (binding.edtpass.text.toString()
-                .trim() == "")
-        ) {
+        val UserName = binding.edtuser.text?.toString()?.trim()
+        val PassWord = binding.edtpass.text?.toString()?.trim()
 
+        if ((UserName.isNullOrEmpty() || PassWord.isNullOrEmpty())
+        ) {
             Toast.makeText(context, "Bạn đang bỏ trống thông tin ", Toast.LENGTH_SHORT).show()
         } else {
-            checkUsser()
+            checkUsser(UserName,PassWord)
         }
 
     }
 
-    private fun checkUsser() {
+    private fun checkUsser(UserName: String?, PassWord: String?) {
         val IsCheck = binding.chkRememberUser.isChecked
         viewModelLogin.getUser().observe(viewLifecycleOwner) { data ->
             when (data.status) {
                 DataResult.Status.SUCCESS -> {
-                    val listUser: ArrayList<User> = ArrayList()
-                    val value = data.data?.body() as UserResponse
+                    try {
+                        val listUser: ArrayList<User> = ArrayList()
+                        val value = data.data?.body() as? UserResponse
 
-                    if (value.listUser != null) {
-                        listUser.addAll(value.listUser!!)
+                        if (value?.listUser != null) {
+                            listUser.addAll(value.listUser!!)
 
-                        if (listUser.isNotEmpty()) {
-                            for (user in listUser) {
-                                if (user.nameuser == binding.edtuser.text.toString().trim()
-                                    && user.pass == binding.edtpass.text.toString().trim()
-                                ) {
-                                    if (IsCheck == false) {
+                            if (listUser.isNotEmpty()) {
+                                val matchedUser = listUser.find { it.nameuser == UserName && it.pass == PassWord }
+                                if (matchedUser != null) {
+                                    if (IsCheck) {
+                                        saveData(UserName, PassWord)
+                                       findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
+                                        sharePreferences?.edit()?.putBoolean(Constant.CHECK_LOGIN, true)?.apply()
+                                    } else {
                                         sharePreferences?.edit()?.putBoolean(Constant.CHECK_LOGIN, true)?.apply()
                                         findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
-                                    } else {
-                                        saveData()
+                                        clearSavedLoginData()
                                     }
-                                    saveProfile(user)
-                                    return@observe // Đã tìm thấy người dùng khớp, không cần kiểm tra tiếp
-
+                                    saveProfile(matchedUser)
+                                } else {
+                                    // Nếu tới đây, có nghĩa không có người dùng nào khớp
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Bạn đã nhập sai tên hoặc mật khẩu",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    binding.edtuser.text = null
+                                    binding.edtpass.text = null
                                 }
+                            } else {
+                                // Danh sách người dùng trống
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Danh sách người dùng trống",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-                            // Nếu tới đây, có nghĩa không có người dùng nào khớp
-                            Toast.makeText(
-                                requireContext(),
-                                "Bạn đã nhập sai tên hoặc mật khẩu",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            binding.edtuser.text = null
-                            binding.edtpass.text = null
                         } else {
-                            // Danh sách người dùng trống
+                            // Dữ liệu từ server bị null
                             Toast.makeText(
                                 requireContext(),
-                                "Danh sách người dùng trống",
+                                "Dữ liệu từ server không hợp lệ",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                    } else {
-                        // Dữ liệu từ server bị null
-                        Toast.makeText(
-                            requireContext(),
-                            "Dữ liệu từ server không hợp lệ",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    } catch (e: Exception) {
+                        // Log thông tin lỗi
+                        Log.e("LoginFragment", "Error checking user", e)
                     }
                 }
-
                 DataResult.Status.LOADING -> {
-
+                    // Loading state
                 }
-
                 DataResult.Status.ERROR -> {
                     Toast.makeText(requireContext(), "lỗi data", Toast.LENGTH_SHORT).show()
                 }
@@ -173,47 +140,52 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun saveProfile(user: User) {
-        val namep = user.nameuser
-        val gmailp = user.gmail
-        val passp = user.pass
-
-        sharePreferences = activity?.getSharedPreferences("USER", Context.MODE_PRIVATE) //?: return
-        with(sharePreferences?.edit()) {
-            this?.putString("Namep", namep)
-            this?.putString("Gmailp", gmailp)
-            this?.putString("Passp", passp)
-            this?.apply()
-        }
-    }
-
-    private fun saveData() {
-        val name = binding.edtuser.text.toString()
-        val pass = binding.edtpass.text.toString()
-        val saveuser = binding.chkRememberUser.isChecked
+    private fun clearSavedLoginData() {
         sharePreferences = activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
-        sharePreferences?.edit()?.putBoolean(Constant.CHECK_LOGIN, true)?.apply()
-        with(sharePreferences?.edit()) {
-            this?.putString("NameLogin", name)
-            this?.putString("PassWord", pass)
-            this?.putBoolean("SavePass", saveuser)
-            this?.apply()
+        sharePreferences?.edit()?.apply {
+            remove("NameLogin")
+            remove("PassWord")
+            putBoolean("SavePass", false)
+            apply()
         }
-        findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
     }
 
+    private fun saveProfile(user: User) {
+        sharePreferences = activity?.getSharedPreferences("USER", Context.MODE_PRIVATE)
+        sharePreferences?.edit()?.apply {
+            putString("Namep", user.nameuser)
+            putString("Gmailp", user.gmail)
+            putString("Passp", user.pass)
+            putString("id", user.iddata.toString())
+            apply()
+        }
+
+    }
+
+    private fun saveData(username: String?, password: String?) {
+        sharePreferences = activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+        sharePreferences?.edit()?.apply {
+            putString("NameLogin", username)
+            putString("PassWord", password)
+            putBoolean("SavePass", binding.chkRememberUser.isChecked)
+            apply()
+        }
+    }
 
     private fun showDataFromSharePrefer() {
-        sharePreferences =
-            activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)  // ?: return
-        val data1 = sharePreferences?.getString("NameLogin", "")
-        val data2 = sharePreferences?.getString("PassWord", "")
-        val data3 = sharePreferences?.getBoolean("SavePass", false)
-        binding.edtuser.setText(data1)
-        binding.edtpass.setText(data2)
-        binding.chkRememberUser.isChecked = data3!!
-
+        sharePreferences = activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+        sharePreferences?.let {
+            val data1 = it.getString("NameLogin", "")
+            val data2 = it.getString("PassWord", "")
+            val data3 = it.getBoolean("SavePass", false)
+            binding.edtuser.setText(data1)
+            binding.edtpass.setText(data2)
+            binding.chkRememberUser.isChecked = data3
+        } ?: showToast("null")
     }
 
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
 
 }

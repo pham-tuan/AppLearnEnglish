@@ -20,22 +20,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.tuan.englishforkid.brocastreceivers.BroadcastCheckInternet
 import com.tuan.englishforkid.databinding.ActivityMainBinding
+import com.tuan.englishforkid.di.NetworkConnection
+import com.tuan.englishforkid.utils.Constant
 import dagger.hilt.android.AndroidEntryPoint
+import pl.droidsonroids.gif.GifDrawable
 import java.util.Objects
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private var navController: NavController? = null
     private lateinit var binding: ActivityMainBinding
     private var dialog: AlertDialog? = null
-    private var sharePreferences: SharedPreferences? = null
     var br = BroadcastCheckInternet()
+    private var sharePreferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +51,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         binding = ActivityMainBinding.inflate(layoutInflater)
+        sharePreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
 
         val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         registerReceiver(br, filter)
@@ -52,18 +60,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         handleDrawer()
         isetUpNavigationFragment()
         initView()
-        setHeaderDraer()
-        setContentView(binding.root)
-    }
+        setHeaderDrawer()
 
-    private fun checkInternet() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (NetworkConnection().isNetworkAvailable(Objects.requireNonNull(this))) {
-                findNavController(R.id.HomeFragment)
-            } else {
-                showDialog()
-            }
-        }
+        setContentView(binding.root)
+
+
     }
 
     private fun setHandelAlertDialog() {
@@ -72,35 +73,56 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         alertDialogBuilder.setView(view)
 
-        var btnClose = view.findViewById<ImageView>(R.id.ivClose)
+        val btnClose = view.findViewById<ImageView>(R.id.ivClose)
         btnClose.setOnClickListener {
             dialog?.dismiss()
         }
-        var btnConfirm = view.findViewById<Button>(R.id.btnConfirm)
+
+        val btnConfirm = view.findViewById<Button>(R.id.btnConfirm)
         btnConfirm.setOnClickListener {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             dialog?.dismiss()
-            findNavController(R.id.nav_host_fragment).navigate(R.id.LoginFragment)
+
+            // Đăng xuất người dùng
+            sharePreferences?.edit()?.putBoolean(Constant.CHECK_LOGIN, false)?.apply()
+
+            // Xóa back stack và chuyển đến LoginFragment
+            findNavController(R.id.nav_host_fragment).navigate(
+                R.id.LoginFragment,
+                null,
+                NavOptions.Builder()
+                    .setPopUpTo(R.id.nav_graph, true)  // Thay R.id.nav_graph bằng ID của nav graph của bạn
+                    .build()
+            )
+
+            // Xóa toàn bộ back stack của FragmentManager
+            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+
+            // Tạo Intent mới để khởi động lại Activity với task mới
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            finish()
         }
-        var btnCancel = view.findViewById<Button>(R.id.btnCancel)
+
+        val btnCancel = view.findViewById<Button>(R.id.btnCancel)
         btnCancel.setOnClickListener {
             dialog?.dismiss()
         }
+
+        val imgGif = view.findViewById<ImageView>(R.id.img)
+        val gifDrawable = GifDrawable(resources, R.drawable.logout)
+        imgGif.setImageDrawable(gifDrawable)
+        gifDrawable.start()
 
         dialog = alertDialogBuilder.create()
         dialog?.show()
     }
 
-    private fun setHeaderDraer() {
-        // val view = layoutInflater.inflate(R.layout.nav_header,null)
-        val headerView: View = binding.naview.getHeaderView(0)
-        var nameProfile = headerView.findViewById<TextView>(R.id.nameUser)
-        // hiển thị lên headrerDrawer
-
-        sharePreferences =
-            this.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)  // ?: return
-        val data1 = sharePreferences?.getString("NameLogin", "") ?: "tuanĐZ"
-        nameProfile.setText(data1)
+    private fun setHeaderDrawer() {
+        val nameProfile = binding.naview.getHeaderView(0).findViewById<TextView>(R.id.nameUser)
+        val sharedPreferences = getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+        nameProfile.text = sharedPreferences?.getString("NameLogin", "") ?: "tuanĐZ"
     }
 
     private fun disableSwipeDrawerLayout() {
@@ -124,7 +146,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.tvOffDrawer.setOnClickListener {
             binding.drawerLayout.close()
         }
-
+        binding.hearder.tvhead.isSelected = true
     }
 
     fun handleShowHeader(isShow: Boolean) {
@@ -142,6 +164,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.indicatorProgress.visibility = View.GONE
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             binding.drawerLayout.close()
@@ -150,22 +173,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-
     private fun initView() {
         binding.naview.setNavigationItemSelectedListener(this)
 
-    }
-
-    private fun showDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(R.string.check_internet)
-        builder.setMessage(R.string.check_your_internet)
-        builder.setCancelable(false)
-        builder.setNegativeButton(R.string.exit) { dialog, which ->
-            dialog.dismiss()
-        }
-        val alertDialog = builder.create()
-        alertDialog.show()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -178,9 +188,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             R.id.naventertainment -> {
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
-                findNavController(R.id.nav_host_fragment).navigate(R.id.EntertainmentFragment)
+                findNavController(R.id.nav_host_fragment).navigate(R.id.SplashEnterFragment)
                 true
             }
+
             R.id.navfavorite -> {
                 binding.drawerLayout.closeDrawer(GravityCompat.START)
                 findNavController(R.id.nav_host_fragment).navigate(R.id.favorFragment)
@@ -198,6 +209,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 findNavController(R.id.nav_host_fragment).navigate(R.id.pactiveFragment)
                 true
             }
+            R.id.navlisten -> {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+                findNavController(R.id.nav_host_fragment).navigate(R.id.listenFragment)
+                true
+            }
+
+            R.id.navSetTing -> {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+                findNavController(R.id.nav_host_fragment).navigate(R.id.SetingFragment)
+                true
+            }
 
             R.id.navLogOut -> {
                 setHandelAlertDialog()
@@ -209,7 +231,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return false
     }
 
+
 }
+
 
 fun Activity.hideKeyboard(view: View) {
     val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

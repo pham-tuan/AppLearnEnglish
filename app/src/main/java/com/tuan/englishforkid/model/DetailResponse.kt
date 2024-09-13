@@ -10,7 +10,7 @@ data class DetailResponse(@SerializedName("detail") var listDetail: ArrayList<De
 
 data class Detail(
 
-    @SerializedName("iddata") val iddata: String? = null,
+    @SerializedName("iddata") val iddata: Int? = null,
     @SerializedName("type") val type: String? = null,
     @SerializedName("imgdetail") val imgdetail: String? = null,
     @SerializedName("vocabulary") val vocabulary: String? = null,
@@ -18,5 +18,11 @@ data class Detail(
     @SerializedName("means") val means: String? = null,
     @SerializedName("sound") val sound: String? = null,
     @SerializedName("status") val status: String? = null,
+    @SerializedName("note") val note: String? = null,
+    @SerializedName("result") val result: String? = null,
+    @SerializedName("a") val a: String? = null,
+    @SerializedName("b") val b: String? = null,
+    @SerializedName("c") val c: String? = null,
+    @SerializedName("d") val d: String? = null,
 
     ) : Parcelable

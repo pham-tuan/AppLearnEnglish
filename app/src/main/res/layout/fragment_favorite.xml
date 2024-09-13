@@ -52,7 +52,7 @@
 
             <androidx.viewpager2.widget.ViewPager2
                 android:background="@color/white"
-                android:id="@+id/viewPagerDetail"
+                android:id="@+id/viewPagerFavor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"

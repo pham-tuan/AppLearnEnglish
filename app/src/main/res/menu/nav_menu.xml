@@ -25,6 +25,14 @@
             app:showAsAction="ifRoom">
 
         </item>
+        <item
+        android:id="@+id/navlisten"
+        android:enabled="true"
+        android:icon="@drawable/void_24"
+        android:title="Listenning"
+        app:showAsAction="ifRoom">
+
+    </item>
 
         <item
             android:id="@+id/naventertainment"
@@ -37,7 +45,7 @@
         <item
             android:id="@+id/navfavorite"
             android:enabled="true"
-            android:icon="@drawable/ic_unlike"
+            android:icon="@drawable/favorite_24dp"
             android:title="@string/favorite_nav_menu"
             app:showAsAction="ifRoom">
 
@@ -48,7 +56,6 @@
             android:icon="@drawable/ic_person"
             android:title="@string/nav_infor"
             app:showAsAction="ifRoom">
-
         </item>
 
 

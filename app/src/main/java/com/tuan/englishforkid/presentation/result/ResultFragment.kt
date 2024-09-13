@@ -45,7 +45,7 @@ class ResultFragment : Fragment() {
         binding.showResult.text = "Bạn đã trả lời đúng $pointtrue/$totalScore câu"
 
         binding.btnPracice.setOnClickListener {
-            findNavController().navigate(R.id.action_ResultFragment_to_PracticeFragment)
+            findNavController().navigate(R.id.action_ResultFragment_to_PracticeFragment2)
             reserPoint()
         }
         binding.btnExit.setOnClickListener {

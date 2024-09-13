@@ -72,7 +72,7 @@
                 android:id="@+id/edtuser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="User Name"
+                android:hint="Tên đăng nhập"
                 android:paddingStart="56dp"
                 android:textColor="@color/black" />
 
@@ -118,7 +118,7 @@
                 android:id="@+id/edtpass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="Mật khẩu"
                 android:inputType="textPassword"
                 android:paddingStart="56dp"
                 android:textColor="@color/black" />
@@ -141,8 +141,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12sp"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgetPass">
 
@@ -159,7 +160,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Remember password"
+            android:text="Ghi nhớ tài khoản"
             android:textColor="@color/white"
             android:textSize="24sp" />
 
@@ -172,40 +173,13 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="42dp"
         android:background="@drawable/bg_btnlogin"
-        android:text="LOGIN"
+        android:text="Đăng nhập"
         android:textSize="24dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/llRemember" />
 
-    <LinearLayout
-        android:id="@+id/btn_loginGG"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/llsignup"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/bg_login_gg"
-        android:paddingEnd="12dp"
-        android:padding="2dp"
-        android:layout_marginBottom="12dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/goog"
-            android:layout_margin="4dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sign in with Google"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:layout_marginStart="4dp"/>
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/llsignup"
@@ -228,7 +202,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="SignUp !!"
+            android:text="Đăng kí !!"
             android:textColor="#F4646A"
             android:textSize="20dp"
             android:textStyle="bold" />

@@ -49,11 +49,3 @@ RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
     }
     
 }
-
-
-
-
-
-
-
-
